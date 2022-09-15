@@ -33,16 +33,16 @@ func (r Request) Post(key string) (Plan, error) {
 		return Plan{}, err
 	}
 
-	if res.StatusCode != 200 {
-		e := fmt.Sprintf("Expecting 200, but got status: %d", res.StatusCode)
-		return Plan{}, errors.New(e)
-	}
-
 	defer res.Body.Close()
 
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return Plan{}, err
+	}
+
+	if res.StatusCode != 200 {
+		e := fmt.Sprintf("Expecting 200, but got status: %d\n%s", res.StatusCode, string(body))
+		return Plan{}, errors.New(e)
 	}
 
 	p := new(Plan)

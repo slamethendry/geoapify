@@ -38,26 +38,28 @@ func TestPostSimpleRequest(t *testing.T) {
 	key := os.Getenv("GEOAPIFY_KEY")
 	assert.NotEmpty(t, key)
 
+	agent1 := p.Agent{
+		Start: p.LonLat{106.72683176435947, -6.28476945},
+		End:   p.LonLat{106.7457861328624, -6.29673725},
+	}
+
+	customers := []p.Job{
+		{
+			ID:       "order-xyz",
+			Location: p.LonLat{106.7213665, -6.2895597},
+			Duration: 300,
+		},
+		{
+			ID:       "order-abc",
+			Location: p.LonLat{106.7157832, -6.2853618},
+			Duration: 300,
+		},
+	}
+
 	r := p.Request{
-		Mode: "drive",
-		Agents: []p.Agent{
-			{
-				Start: p.LonLat{106.72683176435947, -6.28476945},
-				End:   p.LonLat{106.7457861328624, -6.29673725},
-			},
-		},
-		Jobs: []p.Job{
-			{
-				ID:       "order-xyz",
-				Location: p.LonLat{106.7213665, -6.2895597},
-				Duration: 300,
-			},
-			{
-				ID:       "order-abc",
-				Location: p.LonLat{106.7157832, -6.2853618},
-				Duration: 300,
-			},
-		},
+		Mode:   "drive",
+		Agents: []p.Agent{agent1},
+		Jobs:   customers,
 	}
 
 	simpleJSON := `{

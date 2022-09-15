@@ -178,7 +178,8 @@ var res = p.Plan{
 				{
 					Location:     p.LonLat{10.98698105, 48.25615875},
 					Duration:     300,
-					PickupAmount: 1},
+					PickupAmount: 1,
+				},
 				{
 					Location:     p.LonLat{10.9845547, 48.26311145},
 					Duration:     300,
