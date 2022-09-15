@@ -5,32 +5,18 @@ import (
 	"net/url"
 )
 
-// types2string converts types to Geoapify API string format.
+// string converts types to Geoapify API string format.
 // Always returns empty string on error.
 
-func (c Coordinate) string() string {
+func (l LonLat) string() string {
 
-	// For routing, output of 6 decimal places is plenty accurate
-	// Ref: https://en.wikipedia.org/wiki/Decimal_degrees
-	return fmt.Sprintf("%.6f", c)
-}
-
-func (g GPS) string() string {
-
-	/* lon := g.Lon.String()
-	lat := g.Lat.String()
-
-	if lon == "" || lat == "" {
-		return ""
-	} */
-
-	empty := GPS{}
-	if g == empty {
+	if l == [2]float64{} {
 		return ""
 	}
 
-	//return fmt.Sprintf("%s,%s", lon, lat)
-	return fmt.Sprintf("%s,%s", g.Lon.string(), g.Lat.string())
+	lon := fmt.Sprintf("%.6f", l[0])
+	lat := fmt.Sprintf("%.6f", l[1])
+	return fmt.Sprintf("%s,%s", lon, lat)
 }
 
 func (g GeoMetryStyle) string() string {
@@ -69,7 +55,7 @@ func (g GeoMetryStyle) string() string {
 	return fmt.Sprintf("%s%s%s%s%s%s", lineColor, lineOpacity, lineWidth, lineStyle, fillColor, fillOpacity)
 }
 
-type gpsList []GPS
+type gpsList []LonLat
 
 func (coords gpsList) string() string {
 
@@ -97,7 +83,7 @@ func (coords gpsList) string() string {
 
 func (c Circle) string() string {
 
-	gps := c.GPS.string()
+	gps := c.LonLat.string()
 
 	if gps == "" || c.Radius < 1 {
 		return ""
@@ -108,7 +94,7 @@ func (c Circle) string() string {
 
 func (a Area) string() string {
 
-	return gpsList([]GPS{a.GPS1, a.GPS2}).string()
+	return gpsList([]LonLat{a.GPS1, a.GPS2}).string()
 }
 
 func (r Rectangle) string() string {
@@ -141,7 +127,7 @@ func (p Polygon) string() string {
 
 func (m Marker) string() string {
 
-	gps := m.GPS.string()
+	gps := m.LonLat.string()
 	if gps == "" {
 		return ""
 	}

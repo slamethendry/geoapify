@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+/*
 func TestPostExampleRequest(t *testing.T) {
 
 	key := os.Getenv("GEOAPIFY_KEY")
@@ -30,6 +31,7 @@ func TestPostExampleRequest(t *testing.T) {
 	assert.Nil(t, err)
 	assert.EqualValues(t, plan, planFromJSON) // same output
 }
+*/
 
 func TestPostSimpleRequest(t *testing.T) {
 

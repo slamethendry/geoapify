@@ -18,11 +18,11 @@ func TestStaticMapWithMarkersURL(t *testing.T) {
 		Style:  "osm-bright-grey",
 		Width:  600,
 		Height: 400,
-		Center: smap.GPS{Lon: -122.670651, Lat: 45.522488},
+		Center: smap.LonLat{-122.670651, 45.522488},
 		Zoom:   14.8,
 		Marker: []smap.Marker{
 			{
-				GPS:         smap.GPS{Lon: -122.676481, Lat: 45.524460},
+				LonLat:      smap.LonLat{-122.676481, 45.524460},
 				Type:        "material",
 				Color:       "#1f63e6",
 				Size:        "x-large",
@@ -32,7 +32,7 @@ func TestStaticMapWithMarkersURL(t *testing.T) {
 				WhiteCircle: "no",
 			},
 			{
-				GPS:         smap.GPS{Lon: -122.671296, Lat: 45.523095},
+				LonLat:      smap.LonLat{-122.671296, 45.523095},
 				Type:        "material",
 				Color:       "#1f63e6",
 				Size:        "x-large",
@@ -42,7 +42,7 @@ func TestStaticMapWithMarkersURL(t *testing.T) {
 				WhiteCircle: "no",
 			},
 			{
-				GPS:         smap.GPS{Lon: -122.664446, Lat: 45.522964},
+				LonLat:      smap.LonLat{-122.664446, 45.522964},
 				Type:        "material",
 				Color:       "#1f63e6",
 				Size:        "x-large",
@@ -61,5 +61,4 @@ func TestStaticMapWithMarkersURL(t *testing.T) {
 	assert.Equal(t, expected.Host, out.Host)
 	assert.Equal(t, expected.Path, out.Path)
 	assert.Equal(t, expected.Query(), out.Query())
-	// assert.Empty(t, s.URL())
 }

@@ -1,21 +1,16 @@
 package staticmap
 
-type Coordinate float64
-
 // Coordinate cannot use float32 due to rounding inconsistency at the 6th digit
 
-type GPS struct {
-	Lon Coordinate
-	Lat Coordinate
-}
+type LonLat [2]float64
 
 type Area struct {
-	GPS1 GPS
-	GPS2 GPS
+	GPS1 LonLat
+	GPS2 LonLat
 }
 
 type Marker struct {
-	GPS
+	LonLat
 	Color       string // Named or in hex form ("#" should be encoded as "%23")
 	Type        string // material | awesome | circle
 	Size        string // small | medium | large | x-large | xx-large
@@ -40,7 +35,7 @@ type GeoMetryStyle struct {
 }
 
 type Circle struct {
-	GPS
+	LonLat
 	Radius uint16 // pixel
 	GeoMetryStyle
 }
@@ -51,18 +46,18 @@ type Rectangle struct {
 }
 
 type PolyLine struct {
-	Coordinates []GPS
+	Coordinates []LonLat
 	GeoMetryStyle
 }
 
 type Polygon struct {
-	Coordinates []GPS
+	Coordinates []LonLat
 	GeoMetryStyle
 }
 
 type StaticMap struct {
 	Area
-	Center      GPS
+	Center      LonLat
 	Style       string  // apidocs.geoapify.com/docs/maps/map-tiles/#about
 	Width       uint16  // pixel
 	Height      uint16  // pixel

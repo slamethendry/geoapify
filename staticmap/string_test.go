@@ -7,20 +7,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var gps1 = GPS{
-	Lon: -74.044724,
-	Lat: 40.693664,
-}
+var gps1 = LonLat{-74.044724, 40.693664}
 
-var gps2 = GPS{
-	Lon: -74.041724,
-	Lat: 40.692664,
-}
+var gps2 = LonLat{-74.041724, 40.692664}
 
-var gps3 = GPS{
-	Lon: -74.055555,
-	Lat: 40.777777,
-}
+var gps3 = LonLat{-74.055555, 40.777777}
 
 var style = GeoMetryStyle{
 	LineColor:   "#ff6600",
@@ -32,7 +23,7 @@ var style = GeoMetryStyle{
 }
 
 var c = Circle{
-	GPS:           gps1,
+	LonLat:        gps1,
 	Radius:        40,
 	GeoMetryStyle: style,
 }
@@ -43,19 +34,17 @@ var rect = Rectangle{
 }
 
 var polyline = PolyLine{
-	Coordinates:   []GPS{gps1, gps2, gps3},
+	Coordinates:   []LonLat{gps1, gps2, gps3},
 	GeoMetryStyle: style,
 }
 
 var polygon = Polygon{
-	Coordinates:   []GPS{gps1, gps2, gps3},
+	Coordinates:   []LonLat{gps1, gps2, gps3},
 	GeoMetryStyle: style,
 }
 
 func TestGPS(t *testing.T) {
 
-	assert.Equal(t, "-74.044724", gps1.Lon.string())
-	assert.Equal(t, "-74.044724,40.693664", gps1.string())
 	area := Area{gps1, gps2}
 	assert.Equal(t, "-74.044724,40.693664,-74.041724,40.692664", area.string())
 	area = Area{}
@@ -99,16 +88,13 @@ func TestMarker(t *testing.T) {
 	}
 
 	m1 := markerStyle
-	m1.GPS.Lon = -122.676481
-	m1.GPS.Lat = 45.524460
+	m1.LonLat = LonLat{-122.676481, 45.524460}
 	m1.Text = "1"
 	m2 := markerStyle
-	m2.GPS.Lon = -122.671296
-	m2.GPS.Lat = 45.523095
+	m2.LonLat = LonLat{-122.671296, 45.523095}
 	m2.Text = "2"
 	m3 := markerStyle
-	m3.GPS.Lon = -122.664446
-	m3.GPS.Lat = 45.522964
+	m3.LonLat = LonLat{-122.664446, 45.522964}
 	m3.Text = "3"
 
 	assert.Equal(t, "lonlat:-122.676481,45.524460;type:material;color:%231f63e6;size:x-large;icon:cloud;icontype:awesome;text:1;whitecircle:no|lonlat:-122.671296,45.523095;type:material;color:%231f63e6;size:x-large;icon:cloud;icontype:awesome;text:2;whitecircle:no|lonlat:-122.664446,45.522964;type:material;color:%231f63e6;size:x-large;icon:cloud;icontype:awesome;text:3;whitecircle:no", m1.string()+"|"+m2.string()+"|"+m3.string())
@@ -117,9 +103,7 @@ func TestMarker(t *testing.T) {
 func TestStaticMap(t *testing.T) {
 
 	s := StaticMap{
-		Center: GPS{
-			Lon: -122.68464,
-			Lat: 45.510378},
+		Center:      LonLat{-122.68464, 45.510378},
 		Style:       "osm-liberty",
 		Zoom:        15.8,
 		Bearing:     54,
@@ -143,11 +127,11 @@ func TestStaticMapWithMarkers(t *testing.T) {
 		Style:  "osm-bright-grey",
 		Width:  600,
 		Height: 400,
-		Center: GPS{Lon: -122.670651, Lat: 45.522488},
+		Center: LonLat{-122.670651, 45.522488},
 		Zoom:   14.8,
 		Marker: []Marker{
 			{
-				GPS:         GPS{Lon: -122.676481, Lat: 45.524460},
+				LonLat:      LonLat{-122.676481, 45.524460},
 				Type:        "material",
 				Color:       "#1f63e6",
 				Size:        "x-large",
@@ -157,7 +141,7 @@ func TestStaticMapWithMarkers(t *testing.T) {
 				WhiteCircle: "no",
 			},
 			{
-				GPS:         GPS{Lon: -122.671296, Lat: 45.523095},
+				LonLat:      LonLat{-122.671296, 45.523095},
 				Type:        "material",
 				Color:       "#1f63e6",
 				Size:        "x-large",
@@ -167,7 +151,7 @@ func TestStaticMapWithMarkers(t *testing.T) {
 				WhiteCircle: "no",
 			},
 			{
-				GPS:         GPS{Lon: -122.664446, Lat: 45.522964},
+				LonLat:      LonLat{-122.664446, 45.522964},
 				Type:        "material",
 				Color:       "#1f63e6",
 				Size:        "x-large",
@@ -189,7 +173,7 @@ func TestStaticMapWithGeometry(t *testing.T) {
 
 	geometry := []interface{}{
 		Circle{
-			GPS:    GPS{Lon: -74.044724, Lat: 40.693664},
+			LonLat: LonLat{-74.044724, 40.693664},
 			Radius: 50,
 			GeoMetryStyle: GeoMetryStyle{
 				LineWidth:   5,
@@ -200,7 +184,7 @@ func TestStaticMapWithGeometry(t *testing.T) {
 			},
 		},
 		Circle{
-			GPS:    GPS{Lon: -74.043725, Lat: 40.613665},
+			LonLat: LonLat{-74.043725, 40.613665},
 			Radius: 50,
 			GeoMetryStyle: GeoMetryStyle{
 				LineWidth:   5,
