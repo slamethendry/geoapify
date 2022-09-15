@@ -1,4 +1,4 @@
-// Package geoapify/maps is a wrapper for Geoapify
+// Package geoapify/staticmap is a wrapper for Geoapify
 // [Static Maps]: https://apidocs.geoapify.com/docs/maps/static/ for use in
 // the backend server.
 //
