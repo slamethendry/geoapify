@@ -70,8 +70,13 @@ type Shipment struct {
 	Description  string      `json:"description,omitempty"`
 }
 
+// Request is the API to describe the target routes that need to be planned.
+// Mode must be one of [walk, hike, scooter, motorcycle, drive, truck,
+// light_truck, medium_truck, truck_dangerous_goods, heavy_truck,
+// long_truck, bicycle, mountain_bike, road_bike, bus, drive_shortest,
+// drive_traffic_approximated, truck_traffic_approximated]
 type Request struct {
-	Mode      string     `json:"mode,omitempty"` // drive|truck|walk|bicycle
+	Mode      string     `json:"mode,omitempty"`
 	Agents    []Agent    `json:"agents,omitempty"`
 	Jobs      []Job      `json:"jobs,omitempty"`
 	Shipments []Shipment `json:"shipments,omitempty"`
