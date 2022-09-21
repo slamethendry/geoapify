@@ -33,10 +33,6 @@ type Agent struct {
 	ID             string       `json:"id,omitempty"`
 	Description    string       `json:"description,omitempty"`
 	TimeWindows    []TimeWindow `json:"time_windows,omitempty"`
-	//PickupCapacity json.Number  `json:"pickup_capacity,omitempty"`
-	//DlvyCapacity   json.Number  `json:"delivery_capacity,omitempty"`
-	//StartLocIndex  json.Number  `json:"start_location_index,omitempty"`
-	//EndLocIndex    json.Number  `json:"end_location_index,omitempty"`
 }
 
 type Job struct {
@@ -50,7 +46,6 @@ type Job struct {
 	Description  string       `json:"description,omitempty"`
 	TimeWindows  []TimeWindow `json:"time_windows,omitempty"`
 	Location     LonLat       `json:"location,omitempty"`
-	//LocIndex     json.Number  `json:"location_index,omitempty"`
 }
 
 type Destination struct {
@@ -58,7 +53,6 @@ type Destination struct {
 	LocIndex    uint         `json:"location_index,omitempty"`
 	Duration    uint         `json:"duration,omitempty"`
 	TimeWindows []TimeWindow `json:"time_windows,omitempty"`
-	//LocIndex    json.Number  `json:"location_index,omitempty"`
 }
 
 type Shipment struct {
@@ -68,6 +62,11 @@ type Shipment struct {
 	Requirements []string    `json:"requirements,omitempty"`
 	Priority     uint8       `json:"priority,omitempty"` // 0..100: 0 lowest
 	Description  string      `json:"description,omitempty"`
+}
+
+type Avoid struct {
+	Type       string `json:"type"` // e.g. tolls
+	Importance uint8  `json:"importance,omitempty"`
 }
 
 // Request is the API to describe the target routes that need to be planned.
@@ -81,6 +80,8 @@ type Request struct {
 	Jobs      []Job      `json:"jobs,omitempty"`
 	Shipments []Shipment `json:"shipments,omitempty"`
 	Locations []Location `json:"locations,omitempty"`
+	Traffic   string     `json:"traffic,omitempty"` // approximated
+	Avoid     []Avoid    `json:"avoid,omitempty"`
 }
 
 type Action struct {
@@ -93,10 +94,6 @@ type Action struct {
 	WaypointIndex uint   `json:"waypoint_index,omitempty"`
 	Index         uint   `json:"index,omitempty"`
 	JobIndex      uint   `json:"job_index,omitempty"`
-	//ShipmentIndex json.Number `json:"shipment_index,omitempty"`
-	//WaypointIndex json.Number `json:"waypoint_index,omitempty"`
-	//Index         json.Number `json:"index,omitempty"`
-	//JobIndex      json.Number `json:"job_index,omitempty"`
 }
 
 type Waypoint struct {
@@ -109,9 +106,6 @@ type Waypoint struct {
 	Actions          []Action `json:"actions,omitempty"`
 	PrevLegIndex     uint     `json:"prev_leg_index,omitempty"`
 	NextLegIndex     uint     `json:"next_leg_index,omitempty"`
-	//OriginalLocIndex json.Number `json:"original_location_index,omitempty"`
-	//PrevLegIndex     json.Number `json:"prev_leg_index,omitempty"`
-	//NextLegIndex     json.Number `json:"next_leg_index,omitempty"`
 }
 
 type Step struct {
@@ -119,8 +113,6 @@ type Step struct {
 	Time      uint `json:"time,omitempty"`     // seconds
 	FromIndex uint `json:"from_index,omitempty"`
 	ToIndex   uint `json:"to_index,omitempty"`
-	//FromIndex json.Number `json:"from_index,omitempty"`
-	//ToIndex   json.Number `json:"to_index,omitempty"`
 }
 
 type Leg struct {
@@ -129,8 +121,6 @@ type Leg struct {
 	Steps             []Step `json:"steps,omitempty"`
 	FromWaypointIndex uint   `json:"from_waypoint_index,omitempty"`
 	ToWaypointIndex   uint   `json:"to_waypoint_index,omitempty"`
-	//FromWaypointIndex json.Number `json:"from_waypoint_index,omitempty"`
-	//ToWaypointIndex   json.Number `json:"to_waypoint_index,omitempty"`
 }
 
 type AgentPlan struct {
@@ -144,15 +134,12 @@ type AgentPlan struct {
 	Actions    []Action   `json:"actions,omitempty"`
 	Waypoints  []Waypoint `json:"waypoints,omitempty"`
 	Legs       []Leg      `json:"legs,omitempty"`
-	//AgentIndex json.Number `json:"agent_index"`
 }
 
 type Params struct {
 	Mode   string  `json:"mode,omitempty"`
 	Agents []Agent `json:"agents,omitempty"`
 	Jobs   []Job   `json:"jobs,omitempty"`
-	// Shipments []Shipment `json:"shipments,omitempty"`
-	// Locations []LonLat   `json:"locations,omitempty"`
 }
 
 type Issues struct {
