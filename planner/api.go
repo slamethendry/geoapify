@@ -2,8 +2,7 @@
 // [Route Planner](https://apidocs.geoapify.com/docs/route-planner/) for use in
 // the backend server.
 //
-// Prerequisite: API key is assumed to be available in the environment
-// variable GEOAPIFY_KEY.
+// Prerequisite: Geoapify API key
 package planner
 
 import (
@@ -13,36 +12,22 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
-const v1URL = "https://api.geoapify.com/v1/routeplanner"
+const geoapify = "https://api.geoapify.com"
+const plannerV1 = "/v1/routeplanner"
+const batchV1 = "/v1/batch"
 
-func (r Request) Post(key string) (Plan, error) {
+// Post a sychronous request to get a route plan.
+// See https://apidocs.geoapify.com/docs/route-planner/#about
+func (r Request) Post(apiKey string) (Plan, error) {
 
-	apiURL := fmt.Sprintf("%s?apiKey=%s", v1URL, key)
+	apiURL := fmt.Sprintf("%s%s?apiKey=%s", geoapify, plannerV1, apiKey)
 
-	reqJSON, err := json.Marshal(r)
+	body, err := postJSON(apiURL, r)
 	if err != nil {
 		return Plan{}, err
-	}
-
-	client := new(http.Client)
-	reader := bytes.NewReader(reqJSON)
-	res, err := client.Post(apiURL, "application/json", reader)
-	if err != nil {
-		return Plan{}, err
-	}
-
-	defer res.Body.Close()
-
-	body, err := ioutil.ReadAll(res.Body)
-	if err != nil {
-		return Plan{}, err
-	}
-
-	if res.StatusCode != 200 {
-		e := fmt.Sprintf("Expecting 200, but got status: %d\n%s", res.StatusCode, string(body))
-		return Plan{}, errors.New(e)
 	}
 
 	p := new(Plan)
@@ -54,15 +39,75 @@ func (r Request) Post(key string) (Plan, error) {
 	return *p, nil
 }
 
-/*
-func (r Request) String() string {
+// Post a batch request to get route plan(s) in async manner.
+// See https://apidocs.geoapify.com/docs/batch/#about
+// It will loop 'maxTry' x 'interval' seconds to wait for Geoapify to return
+// the route plan(s).
+func (b BatchRequest) Post(apiKey string, maxTry, interval uint) (BatchResponse, error) {
 
-	rJSON, err := json.Marshal(r)
+	b.API = plannerV1
+	apiURL := fmt.Sprintf("%s%s?apiKey=%s", geoapify, batchV1, apiKey)
 
+	jsonBytes, err := json.Marshal(b)
 	if err != nil {
-		return ""
+		return BatchResponse{}, err
 	}
 
-	return string(rJSON)
+	client := new(http.Client)
+	reader := bytes.NewReader(jsonBytes)
+	res, err := client.Post(apiURL, "application/json", reader)
+	if err != nil {
+		return BatchResponse{}, err
+	}
+
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return BatchResponse{}, err
+	}
+
+	if res.StatusCode != 200 && res.StatusCode != 202 {
+		e := fmt.Sprintf("POST: Expecting 200 or 202, but got status %d\n%s",
+			res.StatusCode,
+			string(body))
+		return BatchResponse{}, errors.New(e)
+	}
+
+	var job struct {
+		ID string `json:"id"`
+	}
+	err = json.Unmarshal(body, &job)
+	if err != nil {
+		return BatchResponse{}, err
+	}
+
+	done := false
+	apiURL = fmt.Sprintf("%s&id=%s", apiURL, job.ID)
+
+	for try := uint(0); try < maxTry && !done; try++ {
+		time.Sleep(time.Duration(interval) * time.Second)
+
+		status, body, err := getJSON(apiURL)
+		if err != nil {
+			return BatchResponse{}, err
+		}
+
+		if status == 200 {
+			done = true
+
+			var output BatchResponse
+			if err = json.Unmarshal(body, &output); err != nil {
+				return output, err
+			}
+			return output, nil
+		}
+	}
+
+	if !done { // maxTry reached
+		e := fmt.Sprintf("Timed out after %d x %d seconds", maxTry, interval)
+		return BatchResponse{}, errors.New(e)
+	}
+
+	return BatchResponse{}, errors.New("Processing failed")
 }
-*/

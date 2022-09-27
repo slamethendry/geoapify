@@ -84,6 +84,8 @@ type Request struct {
 	Avoid     []Avoid    `json:"avoid,omitempty"`
 }
 
+/* ************************ */
+
 type Action struct {
 	Type          string `json:"type"` // start|end|pickup|delivery
 	StartTime     uint   `json:"start_time,omitempty"`
@@ -153,12 +155,6 @@ type Properties struct {
 	Issues `json:"issues,omitempty"`
 }
 
-type Plan struct {
-	Type       string    `json:"type"` // FeatureCollection
-	Features   []Feature `json:"features,omitempty"`
-	Properties `json:"properties,omitempty"`
-}
-
 type Line []LonLat
 
 type Geometry struct {
@@ -170,4 +166,41 @@ type Feature struct {
 	Geometry   `json:"geometry"`
 	Type       string    `json:"type"` // Feature
 	Properties AgentPlan `json:"properties"`
+}
+
+// Plan is the route(s) output as planned by Geoapify based on the given input
+type Plan struct {
+	Type       string    `json:"type"` // FeatureCollection
+	Features   []Feature `json:"features,omitempty"`
+	Properties `json:"properties,omitempty"`
+}
+
+/* ************************ */
+
+type BatchInput struct {
+	ID     string  `json:"id,omitempty"`
+	Body   Request `json:"body,omitempty"`
+	Params Params  `json:"params"`
+}
+
+// BatchRequest is the input for long-running / batch job request
+// Max number of inputs / len(BatchInput) is 1000
+type BatchRequest struct {
+	API    string       `json:"api"`
+	Inputs []BatchInput `json:"inputs"`
+	Params Params       `json:"params,omitempty"`
+}
+
+type Result struct {
+	Params Params  `json:"params,omitempty"`
+	Body   Request `json:"body,omitemtpy"`
+	Result Plan    `json:"result,omitempty"`
+}
+
+// BatchResponse is the output for long-running / batch job request
+type BatchResponse struct {
+	ID      string   `json:"id"`
+	API     string   `json:"api"`
+	Params  Params   `json:"params,omitempty"`
+	Results []Result `json:"results,omitempty"`
 }

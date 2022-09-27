@@ -502,3 +502,61 @@ var res = p.Plan{
 		},
 	},
 }
+
+const simpleJSON = `{
+    "mode": "drive",
+    "agents": [
+        {
+            "start_location": [
+                106.72683176435947,
+                -6.28476945
+            ],
+            "end_location": [
+                106.7457861328624,
+                -6.29673725
+            ]
+        }
+    ],
+    "jobs": [
+        {
+            "id": "order-xyz",
+            "location": [
+                106.7213665,
+                -6.2895597
+            ],
+            "duration": 300
+        },
+        {
+            "id": "order-abc",
+            "location": [
+                106.7157832,
+                -6.2853618
+            ],
+            "duration": 300
+        }
+    ]
+}`
+
+var agent1 = p.Agent{
+	Start: p.LonLat{106.72683176435947, -6.28476945},
+	End:   p.LonLat{106.7457861328624, -6.29673725},
+}
+
+var customers = []p.Job{
+	{
+		ID:       "order-xyz",
+		Location: p.LonLat{106.7213665, -6.2895597},
+		Duration: 300,
+	},
+	{
+		ID:       "order-abc",
+		Location: p.LonLat{106.7157832, -6.2853618},
+		Duration: 300,
+	},
+}
+
+var simpleRequest = p.Request{
+	Mode:   "drive",
+	Agents: []p.Agent{agent1},
+	Jobs:   customers,
+}
