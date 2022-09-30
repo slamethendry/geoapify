@@ -59,11 +59,11 @@ func TestPostSimpleRequest(t *testing.T) {
 			},
 		},
 	}
-	res, err := br.Post(key, 5, 60)
+	res, err := br.Post(key, 6, 60)
 	assert.Nil(t, err)
 	assert.NotEmpty(t, res)
 
-	var planFromBatch p.Plan = res.Results[0].Result
+	var planFromBatch p.Plan = res.Results[0].Plan
 	jsonPlan, err := json.MarshalIndent(planFromBatch, "", " ")
 	assert.NotEmpty(t, string(jsonPlan))
 	assert.EqualValues(t, plan, planFromBatch) // same output

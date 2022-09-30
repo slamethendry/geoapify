@@ -23,7 +23,7 @@ func main() {
 		panic(err)
 	}
 
-	plan := response.Results[0].Result
+	plan := response.Results[0].Plan
 
 	// Once we get the resulting route plan, we map it using static map API
 	// with map markers with start location at the Office and ending at each

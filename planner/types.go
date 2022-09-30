@@ -194,7 +194,7 @@ type BatchRequest struct {
 type Result struct {
 	Params Params  `json:"params,omitempty"`
 	Body   Request `json:"body,omitemtpy"`
-	Result Plan    `json:"result,omitempty"`
+	Plan   `json:"result,omitempty"`
 }
 
 // BatchResponse is the output for long-running / batch job request
