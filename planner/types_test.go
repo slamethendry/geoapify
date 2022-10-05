@@ -8,6 +8,18 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestLonLat(t *testing.T) {
+
+	const lat = 1.123456789
+	const lon = 5.987654321
+	var ll p.LonLat
+	ll.SetLat(lat)
+	ll.SetLon(lon)
+
+	assert.Equal(t, lat, ll.Lat())
+	assert.Equal(t, lon, ll.Lon())
+}
+
 func TestResponse(t *testing.T) {
 
 	assert.True(t, json.Valid(resJSON))

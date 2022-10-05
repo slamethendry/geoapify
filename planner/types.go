@@ -7,7 +7,22 @@ package planner
 // Unfortunately json.Number is string, so there will be extra work elsewhere
 // The jury is still out whether we need to convert to json.Number
 
+// LonLat stores the GPS longitude and latitude coordinates.
+// Some APIs use lonlat and others use latlon, so helpers functions can be
+// used: Lon(), Lat(), SetLon(), SetLat().
 type LonLat [2]float64
+
+// Lon gets the longitude coordinate value
+func (ll LonLat) Lon() float64 { return ll[0] }
+
+// / Lat gets the latitude coordinate value
+func (ll LonLat) Lat() float64 { return ll[1] }
+
+// SetLon sets the longitude coordinate value
+func (ll *LonLat) SetLon(lon float64) { ll[0] = lon }
+
+// SetLat sets the latitude coordinate value
+func (ll *LonLat) SetLat(lat float64) { ll[1] = lat }
 
 type Location struct {
 	ID     string `json:"id,omitempty"`
