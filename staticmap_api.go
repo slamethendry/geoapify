@@ -1,10 +1,4 @@
-// Package geoapify/staticmap is a wrapper for Geoapify
-// [Static Maps]: https://apidocs.geoapify.com/docs/maps/static/ for use in
-// the backend server.
-//
-// Prerequisite: API key is assumed to be available in the environment
-// variable GEOAPIFY_KEY.
-package staticmap
+package geoapify
 
 import (
 	"errors"
@@ -23,7 +17,7 @@ const staticMapURL = "https://maps.geoapify.com/v1/staticmap"
 func (s StaticMap) URL() string {
 
 	if key := os.Getenv("GEOAPIFY_KEY"); key != "" {
-		return fmt.Sprintf("%s?%s&apiKey=%s", staticMapURL, s.string(), key)
+		return fmt.Sprintf("%s?%s&apiKey=%s", staticMapURL, s.String(), key)
 	}
 
 	return ""

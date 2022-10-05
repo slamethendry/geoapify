@@ -1,21 +1,4 @@
-package planner
-
-// LonLat stores the GPS longitude and latitude coordinates.
-// Some APIs use lonlat and others use latlon, so helpers functions can be
-// used: Lon(), Lat(), SetLon(), SetLat().
-type LonLat [2]float64
-
-// Lon gets the longitude coordinate value
-func (ll LonLat) Lon() float64 { return ll[0] }
-
-// / Lat gets the latitude coordinate value
-func (ll LonLat) Lat() float64 { return ll[1] }
-
-// SetLon sets the longitude coordinate value
-func (ll *LonLat) SetLon(lon float64) { ll[0] = lon }
-
-// SetLat sets the latitude coordinate value
-func (ll *LonLat) SetLat(lat float64) { ll[1] = lat }
+package geoapify
 
 type Location struct {
 	ID     string `json:"id,omitempty"`
@@ -188,6 +171,7 @@ type BatchInput struct {
 }
 
 // BatchRequest is the input for long-running / batch job request
+//
 // Max number of inputs / len(BatchInput) is 1000
 type BatchRequest struct {
 	API    string       `json:"api"`

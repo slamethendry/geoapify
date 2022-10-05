@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	s "github.com/slamethendry/geoapify/staticmap"
+	s "github.com/slamethendry/geoapify"
 )
 
 func main() {

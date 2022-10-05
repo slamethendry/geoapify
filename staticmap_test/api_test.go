@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	smap "github.com/slamethendry/geoapify/staticmap"
+	smap "github.com/slamethendry/geoapify"
 	"github.com/stretchr/testify/assert"
 )
 

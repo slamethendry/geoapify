@@ -1,9 +1,6 @@
-// Package geoapify/planner is a wrapper for Geoapify
-// [Route Planner](https://apidocs.geoapify.com/docs/route-planner/) for use in
-// the backend server.
-//
-// Prerequisite: Geoapify API key
-package planner
+package geoapify
+
+//package planner
 
 import (
 	"bytes"
@@ -110,4 +107,64 @@ func (b BatchRequest) Post(apiKey string, maxTry, interval uint) (BatchResponse,
 	}
 
 	return BatchResponse{}, errors.New("Processing failed")
+}
+
+// helper functions
+
+func postJSON(apiURL string, data interface{}) ([]byte, error) {
+
+	reqJSON, err := json.Marshal(data)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	client := new(http.Client)
+	reader := bytes.NewReader(reqJSON)
+	res, err := client.Post(apiURL, "application/json", reader)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	defer res.Body.Close()
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	if res.StatusCode != 200 && res.StatusCode != 202 {
+		e := fmt.Sprintf("POST: Expecting 200 or 202, but got status %d\n%s",
+			res.StatusCode,
+			string(body))
+		return []byte{}, errors.New(e)
+	}
+
+	return body, nil
+}
+
+func getJSON(apiURL string) (int, []byte, error) {
+
+	client := new(http.Client)
+	res, err := client.Get(apiURL)
+	if err != nil {
+		return 0, []byte{}, err
+	}
+
+	if res.StatusCode == 200 {
+		defer res.Body.Close()
+
+		body, err := ioutil.ReadAll(res.Body)
+		return res.StatusCode, body, err
+	}
+
+	if res.StatusCode == 202 {
+		return res.StatusCode, []byte{}, nil
+	}
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+	e := fmt.Sprintf("GET: Expecting 200 or 202, but got status %d\n%s",
+		res.StatusCode,
+		string(body))
+	return 0, []byte{}, errors.New(e)
 }

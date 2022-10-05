@@ -1,7 +1,7 @@
 package main
 
 import (
-	p "github.com/slamethendry/geoapify/planner"
+	p "github.com/slamethendry/geoapify"
 )
 
 var office = p.LonLat{12.515119332498072, 41.896917189378605} // San Lorenzo

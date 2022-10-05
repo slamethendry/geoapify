@@ -1,25 +1,92 @@
-package staticmap
+package geoapify
 
 import (
 	"fmt"
 	"net/url"
 )
 
-// string converts types to Geoapify API string format.
+type Area struct {
+	GPS1 LonLat
+	GPS2 LonLat
+}
+
+type Marker struct {
+	LonLat
+	Color       string // Named | #hex
+	Type        string // material | awesome | circle
+	Size        string // small | medium | large | x-large | xx-large
+	Icon        string // Icon name
+	IconSize    string
+	IconType    string
+	Text        string // Marker text to be used instead of icon
+	TextSize    string
+	WhiteCircle string // yes | no
+	Shadow      string // auto | no
+	ShadowColor string
+	StrokeColor string
+}
+
+type GeoMetryStyle struct {
+	LineColor   string  // word | #hex
+	LineOpacity float32 // 0.1 .. 1.0
+	LineWidth   uint8   // pixel
+	LineStyle   string  // solid | dotted | dashed | longdash
+	FillOpacity float32 // 0.1 .. 1.0; ignored in PolyLine
+	FillColor   string  // Ignored in PolyLine
+}
+
+type Circle struct {
+	LonLat
+	Radius uint16 // pixel
+	GeoMetryStyle
+}
+
+type Rectangle struct {
+	Area
+	GeoMetryStyle
+}
+
+type PolyLine struct {
+	Coordinates []LonLat
+	GeoMetryStyle
+}
+
+type Polygon struct {
+	Coordinates []LonLat
+	GeoMetryStyle
+}
+
+type StaticMap struct {
+	Area
+	Center      LonLat
+	Style       string  // apidocs.geoapify.com/docs/maps/map-tiles/#about
+	Width       uint16  // pixel
+	Height      uint16  // pixel
+	Format      string  // jpeg | png; default is jpeg
+	Zoom        float32 // 1.0 .. 20.0
+	Pitch       uint8   // 1 .. 60
+	Bearing     uint16  // 1 .. 360
+	ScaleFactor uint8   // 1 | 2
+	Marker      []Marker
+	Geometry    []interface{}
+	// GeoJSON: not implemented
+}
+
+// String() converts types to Geoapify API string format.
 // Always returns empty string on error.
 
-func (l LonLat) string() string {
+func (ll LonLat) String() string {
 
-	if l == [2]float64{} {
+	if ll == [2]float64{} {
 		return ""
 	}
 
-	lon := fmt.Sprintf("%.6f", l[0])
-	lat := fmt.Sprintf("%.6f", l[1])
+	lon := fmt.Sprintf("%.6f", ll.Lon())
+	lat := fmt.Sprintf("%.6f", ll.Lat())
 	return fmt.Sprintf("%s,%s", lon, lat)
 }
 
-func (g GeoMetryStyle) string() string {
+func (g GeoMetryStyle) String() string {
 
 	lineColor := fmt.Sprintf("%s", g.LineColor)
 	if lineColor != "" {
@@ -57,7 +124,7 @@ func (g GeoMetryStyle) string() string {
 
 type gpsList []LonLat
 
-func (coords gpsList) string() string {
+func (coords gpsList) String() string {
 
 	out := ""
 	arrayLen := len(coords)
@@ -65,13 +132,13 @@ func (coords gpsList) string() string {
 		return ""
 	}
 
-	out = coords[0].string()
+	out = coords[0].String()
 	if out == "" {
 		return ""
 	}
 
 	for i := 1; i < arrayLen; i++ {
-		gps := coords[i].string()
+		gps := coords[i].String()
 		if gps == "" {
 			return ""
 		}
@@ -81,30 +148,30 @@ func (coords gpsList) string() string {
 	return out
 }
 
-func (c Circle) string() string {
+func (c Circle) String() string {
 
-	gps := c.LonLat.string()
+	gps := c.LonLat.String()
 
 	if gps == "" || c.Radius < 1 {
 		return ""
 	}
 
-	return fmt.Sprintf("circle:%s,%d%s", gps, c.Radius, c.GeoMetryStyle.string())
+	return fmt.Sprintf("circle:%s,%d%s", gps, c.Radius, c.GeoMetryStyle.String())
 }
 
-func (a Area) string() string {
+func (a Area) String() string {
 
-	return gpsList([]LonLat{a.GPS1, a.GPS2}).string()
+	return gpsList([]LonLat{a.GPS1, a.GPS2}).String()
 }
 
-func (r Rectangle) string() string {
+func (r Rectangle) String() string {
 
-	return fmt.Sprintf("rect:%s%s", r.Area.string(), r.GeoMetryStyle.string())
+	return fmt.Sprintf("rect:%s%s", r.Area.String(), r.GeoMetryStyle.String())
 }
 
-func (p PolyLine) string() string {
+func (p PolyLine) String() string {
 
-	coords := gpsList(p.Coordinates).string()
+	coords := gpsList(p.Coordinates).String()
 	if coords == "" {
 		return ""
 	}
@@ -112,22 +179,22 @@ func (p PolyLine) string() string {
 	p.GeoMetryStyle.FillColor = ""
 	p.GeoMetryStyle.FillOpacity = -1
 
-	return fmt.Sprintf("polyline:%s%s", coords, p.GeoMetryStyle.string())
+	return fmt.Sprintf("polyline:%s%s", coords, p.GeoMetryStyle.String())
 }
 
-func (p Polygon) string() string {
+func (p Polygon) String() string {
 
-	coords := gpsList(p.Coordinates).string()
+	coords := gpsList(p.Coordinates).String()
 	if coords == "" {
 		return ""
 	}
 
-	return fmt.Sprintf("polygon:%s%s", coords, p.GeoMetryStyle.string())
+	return fmt.Sprintf("polygon:%s%s", coords, p.GeoMetryStyle.String())
 }
 
-func (m Marker) string() string {
+func (m Marker) String() string {
 
-	gps := m.LonLat.string()
+	gps := m.LonLat.String()
 	if gps == "" {
 		return ""
 	}
@@ -206,22 +273,22 @@ func stringOf(t interface{}) string {
 
 	switch t.(type) {
 	case Circle:
-		return (t.(Circle)).string()
+		return (t.(Circle)).String()
 	case Rectangle:
-		return (t.(Rectangle)).string()
+		return (t.(Rectangle)).String()
 	case PolyLine:
-		return (t.(PolyLine)).string()
+		return (t.(PolyLine)).String()
 	case Polygon:
-		return (t.(Polygon)).string()
+		return (t.(Polygon)).String()
 	default:
 		return ""
 	}
 }
 
-func (s StaticMap) string() string {
+func (s StaticMap) String() string {
 
-	/* If we use url.Values.Encode(), the output looks slightly different
-	   than Geoapify spec. So we go custom. */
+	// If we use url.Values.Encode(), the output looks slightly different
+	// than Geoapify spec. So we go custom to minimise potential issue.
 
 	out := ""
 	v := s.values()
@@ -248,19 +315,19 @@ func (s StaticMap) values() map[string]string {
 		v["style"] = "osm-bright"
 	}
 
-	if center := s.Center.string(); center != "" {
+	if center := s.Center.String(); center != "" {
 		v["center"] = fmt.Sprintf("lonlat:%s", center)
 	}
 
-	if area := s.Area.string(); area != "" { // ??
+	if area := s.Area.String(); area != "" { // ??
 		v["area"] = fmt.Sprintf("rect:%s", area)
 	}
 
 	marker := ""
 	if numMarker := len(s.Marker); numMarker > 0 {
-		marker = s.Marker[0].string()
+		marker = s.Marker[0].String()
 		for i := 1; i < numMarker; i++ {
-			marker = fmt.Sprintf("%s|%s", marker, s.Marker[i].string())
+			marker = fmt.Sprintf("%s|%s", marker, s.Marker[i].String())
 		}
 	}
 	if marker != "" {

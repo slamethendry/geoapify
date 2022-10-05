@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	p "github.com/slamethendry/geoapify/planner"
+	p "github.com/slamethendry/geoapify"
 	"github.com/stretchr/testify/assert"
 )
 
