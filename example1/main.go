@@ -51,7 +51,7 @@ func main() {
 
 				fmt.Println(action.Type, action.JobID)
 				m := s.Marker{
-					LonLat: s.LonLat(jobs[action.JobIndex].Location),
+					LonLat: s.LonLat(jobs[action.JobIndex].LonLat),
 					Text:   fmt.Sprintf("%d", i), // Type "job" begins at i == 1
 					Color:  agentColours[feature.Properties.AgentIndex],
 				}

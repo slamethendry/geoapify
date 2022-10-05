@@ -39,102 +39,102 @@ var req = p.Request{
 	},
 	Jobs: []p.Job{
 		{
-			Location:     p.LonLat{10.98698105, 48.25615875},
+			LonLat:       p.LonLat{10.98698105, 48.25615875},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.9845547, 48.26311145},
+			LonLat:       p.LonLat{10.9845547, 48.26311145},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.984630924828402, 48.263248250000004},
+			LonLat:       p.LonLat{10.984630924828402, 48.263248250000004},
 			Duration:     300,
 			PickupAmount: 2,
 		},
 		{
-			Location:     p.LonLat{10.968364837855287, 48.262043399999996},
+			LonLat:       p.LonLat{10.968364837855287, 48.262043399999996},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.984364769628737, 48.25542385},
+			LonLat:       p.LonLat{10.984364769628737, 48.25542385},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.984062746838354, 48.25549435},
+			LonLat:       p.LonLat{10.984062746838354, 48.25549435},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.983802751265776, 48.25558745},
+			LonLat:       p.LonLat{10.983802751265776, 48.25558745},
 			Duration:     300,
 			PickupAmount: 2,
 		},
 		{
-			Location:     p.LonLat{10.983222005227521, 48.255775},
+			LonLat:       p.LonLat{10.983222005227521, 48.255775},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.983499356818182, 48.25569725},
+			LonLat:       p.LonLat{10.983499356818182, 48.25569725},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.982919152872745, 48.2558497},
+			LonLat:       p.LonLat{10.982919152872745, 48.2558497},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.983681544239769, 48.25621035},
+			LonLat:       p.LonLat{10.983681544239769, 48.25621035},
 			Duration:     300,
 			PickupAmount: 2,
 		},
 		{
-			Location:     p.LonLat{10.983236456481574, 48.2560687},
+			LonLat:       p.LonLat{10.983236456481574, 48.2560687},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.984312143079265, 48.25577875},
+			LonLat:       p.LonLat{10.984312143079265, 48.25577875},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.981143603167904, 48.257296600000004},
+			LonLat:       p.LonLat{10.981143603167904, 48.257296600000004},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.9807393, 48.25748695},
+			LonLat:       p.LonLat{10.9807393, 48.25748695},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.981209348235852, 48.25786594111741},
+			LonLat:       p.LonLat{10.981209348235852, 48.25786594111741},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.980955539642784, 48.2562265},
+			LonLat:       p.LonLat{10.980955539642784, 48.2562265},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.979089323915998, 48.25726365},
+			LonLat:       p.LonLat{10.979089323915998, 48.25726365},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.979089323915998, 48.25726365},
+			LonLat:       p.LonLat{10.979089323915998, 48.25726365},
 			Duration:     300,
 			PickupAmount: 1,
 		},
 		{
-			Location:     p.LonLat{10.978800955841443, 48.25723825},
+			LonLat:       p.LonLat{10.978800955841443, 48.25723825},
 			Duration:     300,
 			PickupAmount: 1,
 		},
@@ -176,102 +176,102 @@ var res = p.Plan{
 			},
 			Jobs: []p.Job{
 				{
-					Location:     p.LonLat{10.98698105, 48.25615875},
+					LonLat:       p.LonLat{10.98698105, 48.25615875},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.9845547, 48.26311145},
+					LonLat:       p.LonLat{10.9845547, 48.26311145},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.984630924828402, 48.263248250000004},
+					LonLat:       p.LonLat{10.984630924828402, 48.263248250000004},
 					Duration:     300,
 					PickupAmount: 2,
 				},
 				{
-					Location:     p.LonLat{10.968364837855287, 48.262043399999996},
+					LonLat:       p.LonLat{10.968364837855287, 48.262043399999996},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.984364769628737, 48.25542385},
+					LonLat:       p.LonLat{10.984364769628737, 48.25542385},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.984062746838354, 48.25549435},
+					LonLat:       p.LonLat{10.984062746838354, 48.25549435},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.983802751265776, 48.25558745},
+					LonLat:       p.LonLat{10.983802751265776, 48.25558745},
 					Duration:     300,
 					PickupAmount: 2,
 				},
 				{
-					Location:     p.LonLat{10.983222005227521, 48.255775},
+					LonLat:       p.LonLat{10.983222005227521, 48.255775},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.983499356818182, 48.25569725},
+					LonLat:       p.LonLat{10.983499356818182, 48.25569725},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.982919152872745, 48.2558497},
+					LonLat:       p.LonLat{10.982919152872745, 48.2558497},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.983681544239769, 48.25621035},
+					LonLat:       p.LonLat{10.983681544239769, 48.25621035},
 					Duration:     300,
 					PickupAmount: 2,
 				},
 				{
-					Location:     p.LonLat{10.983236456481574, 48.2560687},
+					LonLat:       p.LonLat{10.983236456481574, 48.2560687},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.984312143079265, 48.25577875},
+					LonLat:       p.LonLat{10.984312143079265, 48.25577875},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.981143603167904, 48.257296600000004},
+					LonLat:       p.LonLat{10.981143603167904, 48.257296600000004},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.9807393, 48.25748695},
+					LonLat:       p.LonLat{10.9807393, 48.25748695},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.981209348235852, 48.25786594111741},
+					LonLat:       p.LonLat{10.981209348235852, 48.25786594111741},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.980955539642784, 48.2562265},
+					LonLat:       p.LonLat{10.980955539642784, 48.2562265},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.979089323915998, 48.25726365},
+					LonLat:       p.LonLat{10.979089323915998, 48.25726365},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.979089323915998, 48.25726365},
+					LonLat:       p.LonLat{10.979089323915998, 48.25726365},
 					Duration:     300,
 					PickupAmount: 1,
 				},
 				{
-					Location:     p.LonLat{10.978800955841443, 48.25723825},
+					LonLat:       p.LonLat{10.978800955841443, 48.25723825},
 					Duration:     300,
 					PickupAmount: 1,
 				},
@@ -282,20 +282,20 @@ var res = p.Plan{
 		{
 			Geometry: p.Geometry{
 				Type: "MultiLineString",
-				Coordinates: []p.Line{
-					[]p.LonLat{
+				Coordinates: [][]p.LonLat{
+					{
 						{10.985737, 48.264959},
 						{10.984631, 48.263248},
 					},
-					[]p.LonLat{
+					{
 						{10.984631, 48.263248},
 						{10.984555, 48.263111},
 					},
-					[]p.LonLat{
+					{
 						{10.984555, 48.263111},
 						{10.986981, 48.256159},
 					},
-					[]p.LonLat{
+					{
 						{10.986981, 48.256159},
 						{10.896261, 48.332278},
 					},
@@ -545,12 +545,12 @@ var agent1 = p.Agent{
 var customers = []p.Job{
 	{
 		ID:       "order-xyz",
-		Location: p.LonLat{106.7213665, -6.2895597},
+		LonLat:   p.LonLat{106.7213665, -6.2895597},
 		Duration: 300,
 	},
 	{
 		ID:       "order-abc",
-		Location: p.LonLat{106.7157832, -6.2853618},
+		LonLat:   p.LonLat{106.7157832, -6.2853618},
 		Duration: 300,
 	},
 }

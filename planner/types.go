@@ -1,12 +1,5 @@
 package planner
 
-// We may need to use json.Number instead of uint to represent number, because
-// ",omitempty" will treat value of 0 as "empty" and not output it in the JSON
-// but index of 0 is a valid data.
-// https://stackoverflow.com/questions/38486564/unmarshal-marshal-json-with-int-set-to-0-does-not-seem-to-work
-// Unfortunately json.Number is string, so there will be extra work elsewhere
-// The jury is still out whether we need to convert to json.Number
-
 // LonLat stores the GPS longitude and latitude coordinates.
 // Some APIs use lonlat and others use latlon, so helpers functions can be
 // used: Lon(), Lat(), SetLon(), SetLat().
@@ -29,45 +22,43 @@ type Location struct {
 	LonLat `json:"location"`
 }
 
-type TimeWindow [2]uint
-
 type Break struct {
-	Duration    uint         `json:"duration,omitempty"`
-	TimeWindows []TimeWindow `json:"time_windows,omitempty"`
+	Duration    uint      `json:"duration,omitempty"`
+	TimeWindows [][2]uint `json:"time_windows,omitempty"`
 }
 
 type Agent struct {
-	Start          LonLat       `json:"start_location,omitempty"`
-	StartLocIndex  uint         `json:"start_location_index,omitempty"`
-	End            LonLat       `json:"end_location,omitempty"`
-	EndLocIndex    uint         `json:"end_location_index,omitempty"`
-	PickupCapacity uint         `json:"pickup_capacity,omitempty"`
-	DlvyCapacity   uint         `json:"delivery_capacity,omitempty"`
-	Capabilities   []string     `json:"capabilities,omitempty"`
-	Breaks         []Break      `json:"breaks,omitempty"`
-	ID             string       `json:"id,omitempty"`
-	Description    string       `json:"description,omitempty"`
-	TimeWindows    []TimeWindow `json:"time_windows,omitempty"`
+	Start          LonLat    `json:"start_location,omitempty"`
+	StartLocIndex  uint      `json:"start_location_index,omitempty"`
+	End            LonLat    `json:"end_location,omitempty"`
+	EndLocIndex    uint      `json:"end_location_index,omitempty"`
+	PickupCapacity uint      `json:"pickup_capacity,omitempty"`
+	DlvyCapacity   uint      `json:"delivery_capacity,omitempty"`
+	Capabilities   []string  `json:"capabilities,omitempty"`
+	Breaks         []Break   `json:"breaks,omitempty"`
+	ID             string    `json:"id,omitempty"`
+	Description    string    `json:"description,omitempty"`
+	TimeWindows    [][2]uint `json:"time_windows,omitempty"`
 }
 
 type Job struct {
-	LocIndex     uint         `json:"location_index,omitempty"`
-	Priority     uint8        `json:"priority,omitempty"` // 0..100: 0 lowest
-	Duration     uint         `json:"duration,omitempty"`
-	PickupAmount uint         `json:"pickup_amount,omitempty"`
-	DlvyAmount   uint         `json:"delivery_amount,omitempty"`
-	Requirements []string     `json:"requirements,omitempty"`
-	ID           string       `json:"id,omitempty"`
-	Description  string       `json:"description,omitempty"`
-	TimeWindows  []TimeWindow `json:"time_windows,omitempty"`
-	Location     LonLat       `json:"location,omitempty"`
+	LocIndex     uint      `json:"location_index,omitempty"`
+	Priority     uint8     `json:"priority,omitempty"` // 0..100: 0 lowest
+	Duration     uint      `json:"duration,omitempty"`
+	PickupAmount uint      `json:"pickup_amount,omitempty"`
+	DlvyAmount   uint      `json:"delivery_amount,omitempty"`
+	Requirements []string  `json:"requirements,omitempty"`
+	ID           string    `json:"id,omitempty"`
+	Description  string    `json:"description,omitempty"`
+	TimeWindows  [][2]uint `json:"time_windows,omitempty"`
+	LonLat       `json:"location,omitempty"`
 }
 
 type Destination struct {
 	LonLat      `json:"location,omitempty"`
-	LocIndex    uint         `json:"location_index,omitempty"`
-	Duration    uint         `json:"duration,omitempty"`
-	TimeWindows []TimeWindow `json:"time_windows,omitempty"`
+	LocIndex    uint      `json:"location_index,omitempty"`
+	Duration    uint      `json:"duration,omitempty"`
+	TimeWindows [][2]uint `json:"time_windows,omitempty"`
 }
 
 type Shipment struct {
@@ -170,11 +161,9 @@ type Properties struct {
 	Issues `json:"issues,omitempty"`
 }
 
-type Line []LonLat
-
 type Geometry struct {
 	Type        string `json:"type"` // MultiLineString
-	Coordinates []Line
+	Coordinates [][]LonLat
 }
 
 type Feature struct {
