@@ -71,5 +71,5 @@ func main() {
 		fmt.Printf("%.1f km\n", float32(feature.Properties.Distance)/1000)
 
 	}
-	fmt.Printf("\n%s\n", smap.URL())
+	fmt.Printf("\n%s\n", smap.URL(apiKey))
 }

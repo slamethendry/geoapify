@@ -1,6 +1,7 @@
 # Geoapify
 
 [![Go](https://github.com/slamethendry/geoapify/actions/workflows/go.yml/badge.svg)](https://github.com/slamethendry/geoapify/actions/workflows/go.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/slamethendry/geoapify.svg)](https://pkg.go.dev/github.com/slamethendry/geoapify)
 
 Go wrapper for Geoapify.com's API
 
@@ -8,4 +9,4 @@ Go wrapper for Geoapify.com's API
 - Route Planner
 
 
-API documentation is in go doc. Check the example and test folders to see how the API is used.
+Check the example and test folders in GitHub repo to see how the API is used.

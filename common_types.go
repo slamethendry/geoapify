@@ -1,8 +1,8 @@
 // Geoapify is a wrapper for Geoapify.com's API. For now it only covers:
 //
-// [Static Maps](https://apidocs.geoapify.com/docs/maps/static/) and
+// Static Maps: https://apidocs.geoapify.com/docs/maps/static
 //
-// [Route Planner](https://apidocs.geoapify.com/docs/route-planner)
+// Route Planner: https://apidocs.geoapify.com/docs/route-planner
 //
 // Prerequisite: API key
 package geoapify
